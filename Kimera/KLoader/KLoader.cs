@@ -25,7 +25,6 @@ namespace Kimera.KLoader
             ServerConsole.AddLog("Starting KLOADER");
             CustomNetworkManager.Modded = true;
         }
-
         /// <summary>
         /// Gets a List of plugins sorted based on their priority
         /// </summary>
