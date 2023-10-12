@@ -49,7 +49,8 @@ namespace Kimera.KLoader
         {
             foreach (string path in Directory.GetFiles("../.config/KIMERA/KPlugins", "*.dll"))
             {
-                Assembly plugin = 
+
+            }  
         }
 
 
