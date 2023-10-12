@@ -1,14 +1,11 @@
-﻿using API.Interfaces;
-using Kimera.KLoader.LoaderFeatures;
-using MapEditorReborn.Commands.UtilityCommands;
-using Org.BouncyCastle.Bcpg;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
+using Kimera.API.Interfaces;
+using Kimera.KLoader.LoaderFeatures;
+using Kimera.API.Features;
 
 namespace Kimera.KLoader
 {
@@ -22,7 +19,7 @@ namespace Kimera.KLoader
         /// </summary>
         public KLoader()
         {
-            ServerConsole.AddLog("Starting KLOADER");
+            ServerConsole.AddLog("Starting KLOADER", ConsoleColor.Blue);
             CustomNetworkManager.Modded = true;
         }
         /// <summary>
@@ -45,19 +42,81 @@ namespace Kimera.KLoader
         /// </summary>
         public static List<Assembly> dependencyList { get; } = new();
 
+        /// <summary>
+        /// Loads a single assembly
+        /// </summary>
+        /// <param name="pathName">Represents a single assembly path</param>
+        /// <returns>Returns the loaded assembly</returns>
+        public static Assembly LoadSinglePlugin(string pathName)
+        {
+            try
+            {
+                Assembly ass = Assembly.Load(File.ReadAllBytes(pathName));
+
+                return ass;
+            }
+            catch(Exception ex)
+            {
+                ServerConsole.AddLog($"Error loading {pathName}! {ex}", ConsoleColor.Red);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Instantiates a Plugin
+        /// </summary>
+        /// <param name="ass">The plugin's Assembly</param>
+        /// <returns>Returns the plugin's instance</returns>
+        public static KPlugin<KConfig> InstantiatePlugin(Assembly ass)
+        {
+            try
+            {
+                foreach(Type t in ass.GetTypes())
+                {
+                    KPlugin<KConfig> plugin = null;
+                    ConstructorInfo pluginConstructor = t.GetConstructor(Type.EmptyTypes);
+                    if(pluginConstructor is not null)
+                        plugin = pluginConstructor.Invoke(null) as KPlugin<KConfig>;
+                    else
+                    {
+                        object val = Array.Find(t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), property => property.PropertyType == t)?.GetValue(null);
+                        if (val is not null)
+                            plugin = val as KPlugin<KConfig>;
+                    }
+                    return plugin;
+                }
+            }
+            catch (Exception ex)
+            {
+                ServerConsole.AddLog($"Error while loading {ass.FullName}, {ex}");
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Loads All plugins
+        /// </summary>
         public static void LoadPlugins()
         {
             foreach (string path in Directory.GetFiles("../.config/KIMERA/KPlugins", "*.dll"))
             {
+                Assembly plugin = LoadSinglePlugin(path);
+                if (plugin is null)
+                    continue;
 
-            }  
-        }
+                PluginLocations[plugin] = path;
+            }
 
+            foreach(Assembly ass in PluginLocations.Keys)
+            {
+                if (PluginLocations[ass].Contains("dependencies"))
+                    continue;
 
-
-        public static void InstantiatePlugins()
-        {
-
+                KPlugin<KConfig> pl = InstantiatePlugin(ass);
+                if(pl is null) continue;
+                AssemblyInformationalVersionAttribute attribute = pl.assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+                ServerWrapper.Assemblies.Add(ass, pl);
+            }
         }
         public void RunLoader()
         {

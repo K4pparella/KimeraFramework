@@ -1,4 +1,4 @@
-﻿namespace API.Enums
+﻿namespace Kimera.API.Enums
 {
     /// <summary>
     /// Plugin priority values

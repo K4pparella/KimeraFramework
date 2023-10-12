@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-	<LangVersion>10</LangVersion>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="API\Enums\PluginPriority.cs" />
+    <Compile Include="API\Features\ServerWrapper.cs" />
     <Compile Include="API\Interfaces\KConfig.cs" />
     <Compile Include="API\Interfaces\KPlugin.cs" />
     <Compile Include="KLoader\Config.cs" />
@@ -51,9 +52,6 @@
     </Reference>
     <Reference Include="Assembly-CSharp-Publicized">
       <HintPath>..\..\..\..\OneDrive\Desktop\Depe\Assembly-CSharp-Publicized.dll</HintPath>
-    </Reference>
-    <Reference Include="AudioPlayer_1">
-      <HintPath>..\..\..\..\OneDrive\Desktop\Depe\AudioPlayer_1.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography">
       <HintPath>..\..\..\..\OneDrive\Desktop\Depe\BouncyCastle.Cryptography.dll</HintPath>

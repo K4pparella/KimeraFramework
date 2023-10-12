@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PluginAPI.Core;
+
 using PluginAPI.Core.Attributes;
 
 namespace Kimera.KLoader
@@ -19,7 +15,7 @@ namespace Kimera.KLoader
         {
             if(!Config.isEnabled)
             {
-                ServerConsole.AddLog("Kimera is currently disabled on your server");
+                ServerConsole.AddLog("Kimera is currently disabled on your server", ConsoleColor.Blue);
                 return;
             }
 
@@ -27,7 +23,6 @@ namespace Kimera.KLoader
             Directory.CreateDirectory("../.config/KIMERA/KConfigs");
             Directory.CreateDirectory("../.config/KIMERA/KPlugins");
             Directory.CreateDirectory("../.config/KIMERA/Dependencies");
-
 
             new KLoader().RunLoader();
         }

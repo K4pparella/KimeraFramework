@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace API.Interfaces
+namespace Kimera.API.Interfaces
 {
     public interface KConfig 
     {

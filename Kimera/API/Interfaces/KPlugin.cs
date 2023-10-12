@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using CommandSystem;
-using API.Enums;
 
-namespace API.Interfaces
+using CommandSystem;
+
+using Kimera.API.Enums;
+
+namespace Kimera.API.Interfaces
 {
     public interface KPlugin<out T> : IComparable<KPlugin<KConfig>>
         where T : KConfig

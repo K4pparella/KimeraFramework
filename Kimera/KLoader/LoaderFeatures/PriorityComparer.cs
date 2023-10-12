@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using API.Interfaces;
-using PluginAPI;
+﻿using System.Collections.Generic;
+
+using Kimera.API.Interfaces;
 namespace Kimera.KLoader.LoaderFeatures
 {
     public sealed class PriorityComparer : IComparer<KPlugin<KConfig>>
