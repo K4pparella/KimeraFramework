@@ -6,8 +6,6 @@ using GameCore;
 
 using Kimera.API.Interfaces;
 
-using MEC;
-
 using Mirror;
 
 using PlayerRoles.RoleAssign;
@@ -18,7 +16,7 @@ using UnityEngine;
 
 namespace Kimera.API.Features
 {
-    public class ServerWrapper
+    public class KServer
     {
         /// <summary>
         /// Gets the Assembly with his paired KPlugin

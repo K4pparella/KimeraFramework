@@ -115,7 +115,7 @@ namespace Kimera.KLoader
                 KPlugin<KConfig> pl = InstantiatePlugin(ass);
                 if(pl is null) continue;
                 AssemblyInformationalVersionAttribute attribute = pl.assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-                ServerWrapper.Assemblies.Add(ass, pl);
+                KServer.Assemblies.Add(ass, pl);
             }
         }
         public void RunLoader()
