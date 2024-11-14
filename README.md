@@ -1,1 +1,1 @@
-Idk how to continue this :<
+Idk if I want and how to continue this :<
